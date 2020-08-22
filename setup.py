@@ -9,6 +9,7 @@ setuptools.setup(
     url='https://github.org/andrewshulgin/jupyter_client',
     license='MIT',
     packages=setuptools.find_packages(),
+    setup_requires=['wheel'],
     install_requires=[
         'aiohttp[speedups]',
         'websockets',
