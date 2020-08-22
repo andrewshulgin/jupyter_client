@@ -1,0 +1,27 @@
+Usage:
+    import asyncio
+    import os
+
+    from jupyter_client.client import JupyterSession
+
+    BASE_URL = 'http://localhost:8888'
+    USERNAME = os.environ.get('JUPYTER_USERNAME')
+    PASSWORD = os.environ.get('JUPYTER_PASSWORD')
+
+    MULTILINE_INPUT = '''import time
+    time.time()
+    '''
+
+
+    async def main():
+        async with JupyterSession(BASE_URL, USERNAME, PASSWORD) as s:
+            multiline_input_result = await s.execute(MULTILINE_INPUT)
+            print(multiline_input_result.result)
+            stdout_result = await s.execute("print('hello')")
+            print(stdout_result.stdout)
+            exception_result = await s.execute("raise Exception('hello')")
+            print('\n'.join(exception_result.error.traceback))
+
+
+    if __name__ == '__main__':
+        asyncio.get_event_loop().run_until_complete(main())
